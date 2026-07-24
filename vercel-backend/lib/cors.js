@@ -11,7 +11,7 @@
 // prevents some other website from calling your payment endpoints
 // directly from a visitor's browser.
 
-const ALLOWED_ORIGIN = 'https://cavdo.opik.net';
+const ALLOWED_ORIGIN = 'https://cavdo.qd.je';
 
 function applyCors(req, res) {
   res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
