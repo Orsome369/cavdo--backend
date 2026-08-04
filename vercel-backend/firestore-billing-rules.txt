@@ -1,0 +1,22 @@
+// Add this inside your existing `service cloud.firestore { match /databases/{database}/documents { ... } }`
+// block in Firestore's Rules tab. These rules only affect the `billing`
+// and `orders` collections — merge with whatever rules you already have
+// for other collections, don't just paste over the whole file.
+
+match /billing/{uid} {
+  // The owner can read their own billing status (so the app can show
+  // "Lite plan, expires ..."), but can NEVER write it directly — only
+  // the Admin SDK (running server-side in your Vercel functions) can,
+  // because Admin SDK calls bypass these rules entirely.
+  allow read: if request.auth != null && request.auth.uid == uid;
+  allow write: if false;
+}
+
+match /orders/{orderId} {
+  // Fully server-only. The client never reads or writes order docs —
+  // it only ever gets an orderId back from /api/create-order and hands
+  // it to Razorpay Checkout. Keeping this false end-to-end prevents any
+  // client from forging or inspecting order/payment records.
+  allow read: if false;
+  allow write: if false;
+}
