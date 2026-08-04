@@ -93,6 +93,15 @@ const TIER_CONFIG = {
     temperature: 1,
     top_p: 1,
     max_tokens: 16384,
+    // Without this, NVIDIA NIM's endpoint for GLM-5.2 has a documented bug:
+    // omitting chat_template_kwargs entirely makes streaming arrive in
+    // irregular bursts and reasoning silently misbehave instead of just
+    // defaulting cleanly — which shows up exactly as "sometimes the code
+    // just comes out wrong/garbled". enable_thinking:true turns on GLM's
+    // real chain-of-thought pass before it answers (better for code
+    // correctness); clear_thinking:false is NVIDIA's documented pairing
+    // for it on this model family.
+    extra_body: { chat_template_kwargs: { enable_thinking: true, clear_thinking: false } },
   },
   lite: {
     model: 'nvidia/nemotron-3-nano-30b-a3b',
