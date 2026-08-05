@@ -1,0 +1,12 @@
+{
+  "name": "cavdo-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cavdo AI payment backend (Razorpay + Firebase Admin) for Vercel serverless functions",
+  "dependencies": {
+    "esbuild": "^0.28.1",
+    "firebase-admin": "^12.1.0",
+    "postcss": "^8.5.25",
+    "razorpay": "^2.9.4"
+  }
+}
